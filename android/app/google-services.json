@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1064352884074",
+    "project_id": "tracworx-auth",
+    "storage_bucket": "tracworx-auth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1064352884074:android:6d7d6f1379d068b9477113",
+        "android_client_info": {
+          "package_name": "com.tracworxauth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1064352884074-tgri2l24m6eo8g5vhi9miao80l0kuffs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tracworxauth",
+            "certificate_hash": "9c70d1ba216a979e4e5234d6af3fead127d8287a"
+          }
+        },
+        {
+          "client_id": "1064352884074-vc3s01cdsccrs59jiren4prsfgh218qu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfI8dAd5C2GNP9SeXM4mgV7qIUVRX6irA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1064352884074-vc3s01cdsccrs59jiren4prsfgh218qu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

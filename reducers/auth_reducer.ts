@@ -8,10 +8,10 @@ export const authSlice = createSlice({
     loginReducer: (state, action: { payload: User; type: string }) => {
       state.authStatus = action.payload.authStatus;
     },
-    logoutReducer: (state: User) => {
+    signOutReducer: (state: User) => {
       state.authStatus = AuthStatus.LoggedOut;
     },
   },
 });
 
-export const { loginReducer, logoutReducer } = authSlice.actions;
+export const { loginReducer, signOutReducer } = authSlice.actions;

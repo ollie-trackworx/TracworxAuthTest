@@ -25,6 +25,7 @@ import PageRouter from './pages/page_router';
 import { store } from './store/store';
 import { MD3LightTheme as DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import AuthProvider from './context/auth_provider';
+import HomePage from './pages/home_page';
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
@@ -81,8 +82,8 @@ const App = () => {
         />
         <NavigationContainer>
       
-      <Stack.Navigator initialRouteName="Splash">
-        <Stack.Screen name="Splash" options={{
+      <Stack.Navigator initialRouteName={Routes.initial}>
+        <Stack.Screen name={Routes.initial} options={{
           title: "",
           navigationBarHidden: true,
           headerShown: false,
@@ -91,7 +92,7 @@ const App = () => {
         <Stack.Screen options={{
           headerShown: false,
         }} name={ Routes.login } component = {LoginPage}/>
-              <Stack.Screen name={Routes.home} component={LoginPage} />
+              <Stack.Screen name={Routes.home} component={HomePage} />
            
       </Stack.Navigator>
         </NavigationContainer>
