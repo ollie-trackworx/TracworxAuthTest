@@ -22,13 +22,13 @@ const styles = StyleSheet.create({
   column: {
     display: 'flex',
     flexDirection: 'column',
-    flexWrap: 'wrap',
+    flexWrap: 'nowrap',
     // flex: 1,
   },
   row: {
     display: 'flex',
     flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexWrap: 'nowrap',
     // flex: 1,
   },
 });
