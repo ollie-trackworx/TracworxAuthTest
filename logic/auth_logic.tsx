@@ -50,7 +50,6 @@ class FireAuthHandler implements AuthHandler {
   async signInWith(service: AuthSocialProvider): Promise<User | null> {
     try {
       switch (service) {
-        console.log("Signing in with:"+service)
         case AuthSocialProvider.Google:
           const googleCredential = FirebaseAuth.GoogleAuthProvider.credential(
             await signInWithGoogle()

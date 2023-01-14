@@ -1,24 +1,26 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/react-in-jsx-scope */
 import { Dimensions, Image, Keyboard, KeyboardAvoidingView, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
-import { Alignment, Column } from '../components/layout';
+import { Alignment, Column, Row } from '../components/layout';
 import { Button, Text, TextInput } from 'react-native-paper';
 import { LoginStrings } from '../strings/auth_strings';
 import useThemeColors from '../hooks/theme';
 import React, { useState } from 'react';
 import { useAuthcontext } from '../context/auth_provider';
 import { Routes } from '../config/routes';
-type LoginProps = {
+type PinLoginProps = {
   navigation: any;
 };
 
-const LoginPage: React.FC<LoginProps> = ({ navigation }) => {
+const PinLoginPage: React.FC<PinLoginProps> = ({ navigation }) => {
   const windowHeight = Dimensions.get('window').height;
   const colors = useThemeColors();
   const [isVisible, setVisibile] = useState(false);
-  const { loading, error, login } = useAuthcontext();
+  const { loading, error, PinLogin } = useAuthcontext();
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+    const [data, setData] = useState({ user: { firstname: "John", lastname: "Doe" }, lastLogged:Date.now()});
+    const [password, setPassword] = useState('');
+    const [code, setCode] = useState('xxxxxx');
   const styles = StyleSheet.create({
     logo: {
       width: 100,
@@ -71,15 +73,60 @@ const LoginPage: React.FC<LoginProps> = ({ navigation }) => {
     },
     container: {
       flex: 1,
+      },
+    
+    dot: {
+        height: 10,
+        width: 10,
+        borderRadius: 100,
+        color:'#000000'
     },
+    activeDot: {
+        opacity: 0.7
+      },
+    deactivateDot: {
+        opacity: 0.4
+    }
   });
   const handleVisibility = () => {
     setVisibile(!isVisible);
   };
-  const handleLogin = async () => {
-    if (await login(email, password))
+  const handlePinLogin = async () => {
+    if (await PinLogin(email, password))
      {navigation.navigate(Routes.initial);}
   };
+    function _buildKeyPad(): React.ReactNode {
+        let numpad: React.ReactNode[] = [];
+        let row: React.ReactNode[] = [];
+        for (let i = 0; i < 9; i++){
+            if (i % 3 === 0) {
+                numpad.push(<Row>{
+                  {...row}
+                }</Row>);
+                row = [
+                    <Button>{ `${i+1}` }</Button>
+                ]
+            } else {
+                row.push(<Button>{ `${i+1}` }</Button>)
+            }
+        }
+        return <View>
+            <Column>
+                <Row>
+                    {
+                        code.split("").map((entry: string, index) => {
+                            return <View key={ "dot"+index } style={{ ...styles.dot, ...(entry != "x" ? styles.activeDot : styles.activeDot)}} />
+                        })
+                    }
+                </Row>
+                <View style={{ ...styles.spacer }} />
+                <Column>
+                    {...numpad}
+                </Column>
+            </Column>
+        </View>
+    }
+
   return <KeyboardAvoidingView behavior="padding" style={styles.container}>
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <Column
@@ -88,16 +135,14 @@ const LoginPage: React.FC<LoginProps> = ({ navigation }) => {
         style={styles.page}
       >
         <Image style={styles.logo} source={require('../assets/logo.png')} />
-        <Text style={styles.heading}>{LoginStrings.welcome}</Text>
+        <Text style={styles.heading}>{`${data.user.firstname} ${data.user.lastname}`}</Text>
+        <Text style={styles.heading}>{`Last Logged: ${new Date(data.lastLogged)}`}</Text>
         <View style={{ ...styles.spacer }} />
-        <TextInput onChangeText={newText => setEmail(newText)} right={<TextInput.Icon icon="email" />} mode="outlined" textColor={colors.text} label="Username/Email" style={{ ...styles.spacing, ...styles.textFields }} outlineStyle={{...styles.textFieldBorder}} />
-        <TextInput onChangeText={newText => setPassword(newText)} mode="outlined" textColor={colors.text} right={<TextInput.Icon onPress={handleVisibility} icon={isVisible ? 'eye' : 'eye-off'} />} label="Password"  outlineStyle={{...styles.textFieldBorder}} secureTextEntry={!isVisible} style={{ ...styles.spacing, ...styles.textFields }} />
-        {error ? <Text style={{ ...styles.caption, color: 'red',width:'80%'}}>{error}</Text> : null}
+              {_buildKeyPad()}
         <Button mode="text" color={styles.flatButton.color} style={{ ...styles.spacing }}> Forgot Password?</Button>
-        <Button onPress={handleLogin} loading={loading} mode="text" style={styles.buttons} textColor="white" buttonColor={styles.flatButton.color}>Login</Button>
         <View style={{ ...styles.spacerLg }} />
   </Column>
     </TouchableWithoutFeedback>
   </KeyboardAvoidingView>;
 };
-export default LoginPage;
+export default PinLoginPage;
